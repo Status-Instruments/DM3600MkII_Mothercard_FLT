@@ -29,17 +29,20 @@ int btnidx = 0x0080;
 int disDig[6] = {0,0,0,0,0,0}; //Used to hex of each didget on display - auto update
 int di = 0, dj =0;             //Dedicated i and j for refresh display loops
 
+int p7distemp = 1;
+int digit_no = 0;
+int digit = 0;
+
 
 void main(void)
 {
-  //debug_printf("hello world\n");
-  //debug_exit(0);
-  if(FirstPower == 1){
-      Init_MSP();
+  WDTCTL = WDTPW | WDTHOLD;
+
+  
+  Init_MSP();
 
       
-      FirstPower = 0;
-  }
+
   _EINT();
 
   disDig[0] = 0x77;
@@ -51,6 +54,9 @@ void main(void)
   //TA3CCTL0 &= ~CCIE; //Disable timer for automatic display refresh
   //Display_Test();
 
+  while(1){
+    __no_operation();
+  }
 }
 
 
@@ -235,8 +241,7 @@ void Init_MSP(void){
     P6OUT =  0x78;
     P6REN =  0x00;
 
-    /* PORT 7
-    Set as output low, port 7 is used by display
+
     /* PORT 7
     Set as output low, port 7 is used by display
     P7.0  = Output - dig1
@@ -336,6 +341,7 @@ void Init_MSP(void){
     P10OUT =  0x00;
     P10REN =  0x02;   
 
+    PM5CTL0 &= ~LOCKLPM5;
 
 
     // Clock System Setup
@@ -349,15 +355,15 @@ void Init_MSP(void){
 
 
     // interrupt every 62uS  clock 8 Mhz / 8 = 1000KHz  50000 counts for 0.05 S
-    TA3CCTL0 = CCIE; // TACCR3 interrupt enabled
-    TA3CCR0 = 500;// 0.5 mS
-    TA3CTL = TASSEL_2 + MC_1 + TACLR + ID__8; // SMCLK, continuous mode
+    TA0CCTL0 = CCIE; // CCR0 interrupt enabled
+    TA0CCR0 = 500;// 0.5 mS
+    TA0CTL = TASSEL_2 + MC_1 + TACLR + ID__8; // SMCLK, continuous mode
 
 }
 
 //INTERRUPTS
-#pragma vector = TIMER3_A0_VECTOR
-  __interrupt void Timer3_A0_ISR(void)
+#pragma vector = TIMER0_A0_VECTOR
+  __interrupt void TIMER0_A0_ISR(void)
   {
   refresh_display ();
   }
@@ -432,11 +438,34 @@ void refresh_display(void){
 
   //Loop through each didget and update segments according to array disDig[]
   //Individual Segments - loop x times? 
+  /*
   int p7distemp = 1;
   for(di = 0; di<6 ; di++){
       P7OUT = p7distemp << di;
       P5OUT = disDig[di];
   }
-
+  P7OUT = 0;
+  P5OUT = 0;
+  */
+  // select next digit , if last digit was 6 select digit 1
+  if (digit == 0x00)digit = 0X01;
+  if (digit == 0x20)
+   {
+   digit = 0X01;
+   digit_no = 0;
+   }
+  else
+    {
+    digit_no++;
+    digit <<= 1;
+    }
+  //turn of all digit enables when updating segment data
+  P7OUT &= 0xC0;     
+  // set this digit segment drives
+  P5OUT = disDig[digit_no];
+  // turn this digit on
+  P7OUT |= digit; 
 }
+ 
+
 

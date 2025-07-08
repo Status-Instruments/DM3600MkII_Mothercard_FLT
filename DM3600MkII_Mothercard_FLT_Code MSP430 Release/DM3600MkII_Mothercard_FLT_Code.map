@@ -1,0 +1,47 @@
+
+SYMBOLS BY NAME
+
+    1c00 IDATA0     _FirstPower         
+    4480 CODE       _Init_MSP           
+    4400 ISR        _TIMER0_A0_ISR      
+    1c00            ___RAM_Address      
+     800            ___RAM_Size         
+    1c00            ___begin_IDATA0     
+       0            ___begin_THREAD     
+       0            ___begin_UDATA0     
+    1c12            ___end_IDATA0       
+       0            ___end_THREAD       
+       0            ___end_UDATA0       
+    1c10 IDATA0     _digit              
+    1c0e IDATA0     _digit_no           
+    1c02 IDATA0     _disDig             
+    4440 CODE       _main               
+    45fe CODE       _memcpy             
+    460e CODE       _memset             
+    45ba CODE       _refresh_display    
+    4440 CONST      thread_init_begin   
+    4440 CONST      thread_init_end     
+
+
+SYMBOLS BY VALUE
+
+       0            ___begin_THREAD     
+       0            ___begin_UDATA0     
+       0            ___end_THREAD       
+       0            ___end_UDATA0       
+     800            ___RAM_Size         
+    1c00            ___begin_IDATA0     
+    1c00 IDATA0     _FirstPower         
+    1c00            ___RAM_Address      
+    1c02 IDATA0     _disDig             
+    1c0e IDATA0     _digit_no           
+    1c10 IDATA0     _digit              
+    1c12            ___end_IDATA0       
+    4400 ISR        _TIMER0_A0_ISR      
+    4440 CODE       _main               
+    4440 CONST      thread_init_begin   
+    4440 CONST      thread_init_end     
+    4480 CODE       _Init_MSP           
+    45ba CODE       _refresh_display    
+    45fe CODE       _memcpy             
+    460e CODE       _memset             

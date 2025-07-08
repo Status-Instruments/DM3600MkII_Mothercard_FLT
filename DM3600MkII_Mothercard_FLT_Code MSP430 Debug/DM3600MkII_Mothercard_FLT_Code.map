@@ -1,9 +1,8 @@
 
 SYMBOLS BY NAME
 
-    1c00 IDATA0     _FirstPower         
-    4474 CODE       _Init_MSP           
-    4400 ISR        _Timer3_A0_ISR      
+    4476 CODE       _Init_MSP           
+    4400 ISR        _TIMER0_A0_ISR      
     1c00            ___RAM_Address      
      800            ___RAM_Size         
     1c00            ___begin_IDATA0     
@@ -12,12 +11,13 @@ SYMBOLS BY NAME
     1c10            ___end_IDATA0       
        0            ___end_THREAD       
        0            ___end_UDATA0       
-    1c0e IDATA0     _di                 
-    1c02 IDATA0     _disDig             
+    1c0e IDATA0     _digit              
+    1c0c IDATA0     _digit_no           
+    1c00 IDATA0     _disDig             
     443e CODE       _main               
-    45e4 CODE       _memcpy             
-    45f4 CODE       _memset             
-    45ae CODE       _refresh_display    
+    45f8 CODE       _memcpy             
+    4608 CODE       _memset             
+    45b4 CODE       _refresh_display    
     443e CONST      thread_init_begin   
     443e CONST      thread_init_end     
 
@@ -29,17 +29,17 @@ SYMBOLS BY VALUE
        0            ___end_THREAD       
        0            ___end_UDATA0       
      800            ___RAM_Size         
-    1c00 IDATA0     _FirstPower         
     1c00            ___RAM_Address      
     1c00            ___begin_IDATA0     
-    1c02 IDATA0     _disDig             
-    1c0e IDATA0     _di                 
+    1c00 IDATA0     _disDig             
+    1c0c IDATA0     _digit_no           
+    1c0e IDATA0     _digit              
     1c10            ___end_IDATA0       
-    4400 ISR        _Timer3_A0_ISR      
+    4400 ISR        _TIMER0_A0_ISR      
     443e CONST      thread_init_end     
     443e CODE       _main               
     443e CONST      thread_init_begin   
-    4474 CODE       _Init_MSP           
-    45ae CODE       _refresh_display    
-    45e4 CODE       _memcpy             
-    45f4 CODE       _memset             
+    4476 CODE       _Init_MSP           
+    45b4 CODE       _refresh_display    
+    45f8 CODE       _memcpy             
+    4608 CODE       _memset             
