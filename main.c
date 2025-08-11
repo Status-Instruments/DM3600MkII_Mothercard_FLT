@@ -10,12 +10,13 @@
 *************************************************************************************************************************/
 
 #include <__cross_studio_io.h>
+#include <stdint.h>
 #include "device.h"
 
 void Init_MSP(void);
 void Display_Test(void);
 void refresh_display(void);
-
+void Voltage_Test(void);
 
 int FirstPower = 1;
 int i,j;
@@ -45,15 +46,24 @@ void main(void)
 
   _EINT();
 
-  disDig[0] = 0x77;
-  disDig[1] = 0x7c;
-  disDig[2] = 0x39;
-  disDig[3] = 0x5e;
-  disDig[4] = 0x79;
-  disDig[5] = 0x71;
-  //TA3CCTL0 &= ~CCIE; //Disable timer for automatic display refresh
-  //Display_Test();
 
+
+  TA0CCTL0 &= ~CCIE; //Disable timer for automatic display refresh
+  Display_Test();
+
+  TA0CCTL0 |= CCIE;
+
+  //V Test text
+  //================
+  disDig[0] = 0x3e;
+  disDig[1] = 0x40;
+  disDig[2] = 0x78;
+  disDig[3] = 0x79;
+  disDig[4] = 0x6d;
+  disDig[5] = 0x78;
+  //================
+  __delay_cycles(6000000);
+  Voltage_Test();
   while(1){
     __no_operation();
   }
@@ -94,7 +104,7 @@ void Init_MSP(void){
 
 
     /* PORT 1
-    P1.0  = Output- PWM1
+    P1.0  = Output- PWM1    USED FOR 3v3 Detection
     P1.1  = Input CJ veREF+
     P1.2  = Output- 
     P1.3  = Output
@@ -105,16 +115,16 @@ void Init_MSP(void){
 
     BIT         7       6       5       4       3       2       1       0
     P1DIR       1       1       1       1       1       1       1       1           0xFF
-    P1SEL0      0       0       0       0       0       0       1       0           0x02
-    P1SEL1      1       1       0       0       0       0       1       0           0x02
+    P1SEL0      0       0       0       0       0       0       1       1           0x02
+    P1SEL1      1       1       0       0       0       0       1       1           0x02
     P1OUT       0       0       0       0       0       0       0       0           0x00
     P1REN       0       0       0       0       0       0       0       0           0x00
     P1IES       x       x       x       1       x       0       x       x           0x00
     */
 
     P1DIR =  0xFF;
-    P1SEL0 = 0x02;
-    P1SEL1 = 0x02; 
+    P1SEL0 = 0x03;
+    P1SEL1 = 0x03; 
     P1OUT =  0x00;
     P1REN =  0x00;
 
@@ -344,6 +354,13 @@ void Init_MSP(void){
     PM5CTL0 &= ~LOCKLPM5;
 
 
+    //ADC Setup
+    ADC12CTL0 |= ADC12ON;    // Turn on ADC
+    ADC12CTL1 |= ADC12SSEL_3 | ADC12SHP; // Use SMCLK, enable sampling timer
+    ADC12MCTL0 |= ADC12INCH_0; // Select A7 for ADC
+
+
+
     // Clock System Setup
     CSCTL0_H = CSKEY >> 8;                    // Unlock CS registers
     CSCTL4 =   0;
@@ -367,6 +384,46 @@ void Init_MSP(void){
   {
   refresh_display ();
   }
+
+//Ran from timer A3
+void refresh_display(void){
+
+  //Loop through each didget and update segments according to array disDig[]
+  //Individual Segments - loop x times? 
+  /*
+  int p7distemp = 1;
+  for(di = 0; di<6 ; di++){
+      P7OUT = p7distemp << di;
+      P5OUT = disDig[di];
+  }
+  P7OUT = 0;
+  P5OUT = 0;
+  */
+  // select next digit , if last digit was 6 select digit 1
+  if (digit == 0x00)digit = 0X01;
+  if (digit == 0x20)
+   {
+   digit = 0X01;
+   digit_no = 0;
+   }
+  else
+    {
+    digit_no++;
+    digit <<= 1;
+    }
+  //turn of all digit enables when updating segment data
+  P7OUT &= 0xC0;     
+  // set this digit segment drives
+  P5OUT = disDig[digit_no];
+  // turn this digit on
+  P7OUT |= digit; 
+}
+
+
+
+
+
+
 
 
 void Display_Test(void){
@@ -433,39 +490,40 @@ void Display_Test(void){
 }
 
 
-//Ran from timer A3
-void refresh_display(void){
 
-  //Loop through each didget and update segments according to array disDig[]
-  //Individual Segments - loop x times? 
-  /*
-  int p7distemp = 1;
-  for(di = 0; di<6 ; di++){
-      P7OUT = p7distemp << di;
-      P5OUT = disDig[di];
+  
+
+
+
+
+void Voltage_Test(void){
+  uint32_t analog_input_mV = 0;
+  uint16_t ADC_value = 0;
+  uint32_t analtemp = 0;
+
+  
+
+  
+  ADC12CTL0 |= (ADC12ENC | ADC12SC); // Enable and start conversion
+  while (ADC12CTL1 & ADC12BUSY);     // Wait for conversion to complete
+  ADC_value = ADC12MEM0;
+  
+   
+
+  analog_input_mV = ((3300UL * (uint32_t)ADC_value) >> 12)*2; // Calculate milliVolts as an integer
+  
+  
+  if(analog_input_mV > 3250 && 3350 > analog_input_mV){
+  
+    disDig[0] = 0x00;
+    disDig[1] = 0x73;
+    disDig[2] = 0x77;
+    disDig[3] = 0x6d;
+    disDig[4] = 0x6d;
+    disDig[5] = 0x00;
+
   }
-  P7OUT = 0;
-  P5OUT = 0;
-  */
-  // select next digit , if last digit was 6 select digit 1
-  if (digit == 0x00)digit = 0X01;
-  if (digit == 0x20)
-   {
-   digit = 0X01;
-   digit_no = 0;
-   }
-  else
-    {
-    digit_no++;
-    digit <<= 1;
-    }
-  //turn of all digit enables when updating segment data
-  P7OUT &= 0xC0;     
-  // set this digit segment drives
-  P5OUT = disDig[digit_no];
-  // turn this digit on
-  P7OUT |= digit; 
+  
+
+  __delay_cycles(2000000);
 }
- 
-
-

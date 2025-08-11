@@ -1,45 +1,75 @@
 
 SYMBOLS BY NAME
 
-    4476 CODE       _Init_MSP           
+    466e CODE       _Display_Test       
+    44dc CODE       _Init_MSP           
+    1c04 IDATA0     _Release            
     4400 ISR        _TIMER0_A0_ISR      
+    47e2 CODE       _Voltage_Test       
     1c00            ___RAM_Address      
      800            ___RAM_Size         
     1c00            ___begin_IDATA0     
        0            ___begin_THREAD     
-       0            ___begin_UDATA0     
-    1c10            ___end_IDATA0       
+    1c1e            ___begin_UDATA0     
+     4c0            ___crt_mpy          
+     4c8            ___crt_op2          
+     4cc            ___crt_reshi        
+     4ca            ___crt_reslo        
+    1c1e            ___end_IDATA0       
        0            ___end_THREAD       
-       0            ___end_UDATA0       
-    1c0e IDATA0     _digit              
-    1c0c IDATA0     _digit_no           
-    1c00 IDATA0     _disDig             
-    443e CODE       _main               
-    45f8 CODE       _memcpy             
-    4608 CODE       _memset             
-    45b4 CODE       _refresh_display    
-    443e CONST      thread_init_begin   
-    443e CONST      thread_init_end     
+    1c24            ___end_UDATA0       
+    4878 CODE       ___uint32_mul_16x16 
+    1c06 IDATA0     _bpressed           
+    1c0c IDATA0     _btnidx             
+    1c1c IDATA0     _digit              
+    1c1a IDATA0     _digit_no           
+    1c0e IDATA0     _disDig             
+    1c22 UDATA0     _i                  
+    1c20 UDATA0     _j                  
+    445a CODE       _main               
+    4892 CODE       _memcpy             
+    48a2 CODE       _memset             
+    1c1e UDATA0     _p4inTemp           
+    1c00 IDATA0     _p5temp             
+    1c02 IDATA0     _p7temp             
+    462a CODE       _refresh_display    
+    445a CONST      thread_init_begin   
+    445a CONST      thread_init_end     
 
 
 SYMBOLS BY VALUE
 
        0            ___begin_THREAD     
-       0            ___begin_UDATA0     
        0            ___end_THREAD       
-       0            ___end_UDATA0       
+     4c0            ___crt_mpy          
+     4c8            ___crt_op2          
+     4ca            ___crt_reslo        
+     4cc            ___crt_reshi        
      800            ___RAM_Size         
     1c00            ___RAM_Address      
+    1c00 IDATA0     _p5temp             
     1c00            ___begin_IDATA0     
-    1c00 IDATA0     _disDig             
-    1c0c IDATA0     _digit_no           
-    1c0e IDATA0     _digit              
-    1c10            ___end_IDATA0       
+    1c02 IDATA0     _p7temp             
+    1c04 IDATA0     _Release            
+    1c06 IDATA0     _bpressed           
+    1c0c IDATA0     _btnidx             
+    1c0e IDATA0     _disDig             
+    1c1a IDATA0     _digit_no           
+    1c1c IDATA0     _digit              
+    1c1e            ___end_IDATA0       
+    1c1e            ___begin_UDATA0     
+    1c1e UDATA0     _p4inTemp           
+    1c20 UDATA0     _j                  
+    1c22 UDATA0     _i                  
+    1c24            ___end_UDATA0       
     4400 ISR        _TIMER0_A0_ISR      
-    443e CONST      thread_init_end     
-    443e CODE       _main               
-    443e CONST      thread_init_begin   
-    4476 CODE       _Init_MSP           
-    45b4 CODE       _refresh_display    
-    45f8 CODE       _memcpy             
-    4608 CODE       _memset             
+    445a CODE       _main               
+    445a CONST      thread_init_begin   
+    445a CONST      thread_init_end     
+    44dc CODE       _Init_MSP           
+    462a CODE       _refresh_display    
+    466e CODE       _Display_Test       
+    47e2 CODE       _Voltage_Test       
+    4878 CODE       ___uint32_mul_16x16 
+    4892 CODE       _memcpy             
+    48a2 CODE       _memset             

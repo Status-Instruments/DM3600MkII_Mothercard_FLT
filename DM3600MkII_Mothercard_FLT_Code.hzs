@@ -1,7 +1,9 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints" active_group="Breakpoints"/>
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <BreakpointListItem trigger="" line="516" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="main.c" useHWbreakpoint="false"/>
+ </Breakpoints>
  <EEMRegistersWindow>
   <EEMRegisters generalClockControl="2e" moduleClockControl="43f"/>
  </EEMRegistersWindow>
@@ -63,7 +65,11 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Never">
-   <Watchpoint expression="p4inTemp" name="p4inTemp" radix="-1" linenumber="892" filename="main.c"/>
+   <Watchpoint expression="p4inTemp" name="p4inTemp" radix="-1" linenumber="950" filename="main.c"/>
+   <Watchpoint expression="TA3CCTL0" name="TA3CCTL0" radix="2" linenumber="66" filename="main.c"/>
+   <Watchpoint expression="analog_input_mV" name="analog_input_mV" radix="10" linenumber="513" filename="main.c"/>
+   <Watchpoint expression="ADC_value" name="ADC_value" radix="10" linenumber="509" filename="main.c"/>
+   <Watchpoint expression="analtemp" name="analtemp" radix="10" linenumber="511" filename="main.c"/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -76,10 +82,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="7" y="422" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="main.c" selected="1" top="387" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="510" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="main.c" selected="0" top="491" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="device.h" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="57" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="C:/Program Files/Rowley Associates Limited/CrossWorks for MSP430 3.2/src/crt0.asm" selected="0" top="11" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="5" y="1698" useTextEdit="1" openedFrom="C:/Users/Matthew.payne/Documents/GitHub/DM3600MkII_Mothercard_FLT/main.c" useBinaryEdit="0" left="0" path="../../../AppData/Local/Rowley Associates Limited/CrossWorks for MSP430/v3/packages/include/msp430fr6989.h" selected="0" top="1674" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="68" y="694" useTextEdit="1" openedFrom="C:/Users/Matthew.payne/Documents/GitHub/DM3600MkII_Mothercard_FLT/main.c" useBinaryEdit="0" left="0" path="../../../AppData/Local/Rowley Associates Limited/CrossWorks for MSP430/v3/packages/include/msp430fr6989.h" selected="1" top="674" codecName="Default"/>
  </Files>
  <MSP430CrossStudioWindow activeProject="DM3600MkII_Mothercard_FLT_Code" fileDialogDefaultFilter="*.c" autoConnectTarget="MSP-FET/MSP-FET430UIF/eZ-FET" buildConfiguration="MSP430 Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="525951"/>
 </session>
